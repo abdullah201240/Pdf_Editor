@@ -367,7 +367,9 @@ export const PDFEditor = () => {
       });
 
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      // Convert to standard Uint8Array for Blob compatibility
+      const bytesArray = Array.from(pdfBytes);
+      const blob = new Blob([new Uint8Array(bytesArray)], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       
       // Generate filename with timestamp
